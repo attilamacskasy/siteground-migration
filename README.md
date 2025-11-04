@@ -21,6 +21,7 @@ Adjust the `EDIT ME` blocks at the top of each script before running them. They 
 - `03_ssh_backup_and_pull.sh` SSHes into SiteGround, toggles WordPress maintenance, tars up the install (skipping caches), downloads it, extracts to a staging directory, and fixes ownership.
 - `03_tune_and_finalize.sh` installs WP-CLI if missing, creates the local database, imports the dump, updates `wp-config.php`, cleans SiteGround plugins, runs search-replace, flushes permalinks, and can optionally request Let’s Encrypt.
 - `test/Screenshot 2025-11-04 005647.jpg` is a visual reminder of a successful lftp transfer check (used as a note-to-self, not part of the automation).
+- `04_compare_local_trees.sh` compares two local copies (e.g., FTP vs SSH snapshot) and flags files missing on either side, byte deltas, or size mismatches.
 
 ## Prerequisites
 
@@ -33,6 +34,13 @@ Adjust the `EDIT ME` blocks at the top of each script before running them. They 
 - Long-running steps tee output into `/root/*.log` for later audits.
 - Scripts are idempotent where possible: rerunning prepare/verify steps should succeed without manual cleanup.
 - Keep credentials in a password manager; do not commit real passwords back into this repository.
+
+## FTP vs SSH copies
+
+- `02_fetch_site.sh` (FTP) mirrors the tree file-by-file and can take noticeably longer; in one run it left transient Let’s Encrypt challenges (`.well-known/acme-challenge/*`) in place until cleaned manually.
+- `03_ssh_backup_and_pull.sh` (SSH) finishes faster thanks to tar+gzip, but will leave `.maintenance` behind if the script aborts before it disables maintenance mode.
+- `04_compare_local_trees.sh` helps confirm both copies match; after deleting the stray `acme-challenge` files on the FTP tree and the `.maintenance` file on the SSH tree, the script reported identical file counts and byte totals.
+- Expect the verification step to fail with a warning when artifacts differ; rerun after cleanup to ensure the transfer paths are truly aligned before cut-over.
 
 ## Next steps
 
