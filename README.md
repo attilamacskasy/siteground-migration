@@ -20,8 +20,16 @@ Adjust the `EDIT ME` blocks at the top of each script before running them. They 
 - `03_gen_and_import_sg_key.sh` generates an ed25519 SSH key, shows the public key for SiteGround’s portal, adds a friendly alias to `~/.ssh/config`, and tests the connection.
 - `03_ssh_backup_and_pull.sh` SSHes into SiteGround, toggles WordPress maintenance, tars up the install (skipping caches), downloads it, extracts to a staging directory, and fixes ownership.
 - `03_tune_and_finalize.sh` installs WP-CLI if missing, creates the local database, imports the dump, updates `wp-config.php`, cleans SiteGround plugins, runs search-replace, flushes permalinks, and can optionally request Let’s Encrypt.
-- `test/Screenshot 2025-11-04 005647.jpg` is a visual reminder of a successful lftp transfer check (used as a note-to-self, not part of the automation).
 - `04_compare_local_trees.sh` compares two local copies (e.g., FTP vs SSH snapshot) and flags files missing on either side, byte deltas, or size mismatches.
+- `05_db_pull_and_import.sh` connects over SSH to capture remote `wp-config.php`, dump the SiteGround database, download the gzip file, and import it into the local MariaDB instance.
+- `06_compare_db_tables.sh` aligns remote and local databases table-by-table, reporting missing tables or row-count mismatches.
+- `07a_verify_dns_and_ports.sh` waits for DNS to resolve to the new server across multiple public resolvers, checks local listeners/UFW, and can auto-trigger Let’s Encrypt.
+- `07_enable_lets_encrypt.sh` runs certbot with the Apache plugin to issue HTTPS certificates, enable redirects, reload Apache, and set up renewal timers.
+- `08_finalize_wp_local.sh` removes SiteGround plugins, tightens permissions, blocks PHP execution in uploads, enables security headers, and flushes rewrite rules.
+- `09_rename_vm.sh` renames the VM safely, updates `/etc/hosts`, and optionally regenerates `machine-id` and SSH host keys for cloned images.
+- `10_backup_wp.sh` creates a repeatable WordPress backup by dumping the database, archiving files (skipping caches), and writing manifests plus SHA256 checksums.
+- `11_diagnostics_menu.sh` launches an interactive post-migration dashboard for logs, server health, MySQL visibility, SSL checks, and WP-CLI spot checks.
+- `test/Screenshot 2025-11-04 005647.jpg` is a visual reminder of a successful lftp transfer check (used as a note-to-self, not part of the automation).
 
 ## Prerequisites
 
