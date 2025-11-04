@@ -1,0 +1,70 @@
+attila@AT-P-BLG-LMP-U24-01:~$ sudo bash 07_enable_lets_encrypt.sh
+[INFO]  Checking prerequisites…
+Scanning processes...
+Scanning linux images...
+[INFO]  Verifying DNS A record for cloudmigration.blog…
+[WARN]  DNS A for cloudmigration.blog is 35.214.221.135, expected 46.139.14.94.
+If you *just* changed it, propagation can take a bit; continuing anyway.
+[OK]    Apache modules ready.
+[OK]    UFW allows 80/443.
+[OK]    Backed up vhost to: /etc/apache2/sites-available/cloudmigration.blog.conf.2025-11-04_033545.bak
+[INFO]  Requesting Let's Encrypt certificate for cloudmigration.blog (HTTP-01)…
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Account registered.
+Requesting a certificate for cloudmigration.blog
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/cloudmigration.blog/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/cloudmigration.blog/privkey.pem
+This certificate expires on 2026-02-02.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+Deploying certificate
+Successfully deployed certificate for cloudmigration.blog to /etc/apache2/sites-enabled/cloudmigration.blog.conf
+Added an HTTP->HTTPS rewrite in addition to other RewriteRules; you may wish to check for overall consistency.
+Congratulations! You have successfully enabled HTTPS on https://cloudmigration.blog
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[OK]    Certificate obtained and Apache config updated.
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+Syntax OK
+[OK]    Apache reloaded.
+[INFO]  Verifying HTTPS with curl (certificate validation)…
+[OK]    HTTPS is reachable. Response headers:
+HTTP/2 200
+server: nginx
+date: Tue, 04 Nov 2025 02:35:58 GMT
+content-type: text/html; charset=UTF-8
+vary: Accept-Encoding
+vary: User-Agent
+x-cache-enabled: True
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+link: <https://cloudmigration.blog/wp-json/>; rel="https://api.w.org/", <https://cloudmigration.blog/wp-json/wp/v2/pages/10>; rel="alternate"; title="JSON"; type="application/json", <https://cloudmigration.blog/>; rel=shortlink
+x-httpd: 1
+host-header: 8441280b0c35cbc1147f8ba998a563a7
+x-proxy-cache-info: DT:1
+
+[INFO]  Enabling certbot.timer and testing renewal…
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Processing /etc/letsencrypt/renewal/cloudmigration.blog.conf
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Account registered.
+Simulating renewal of an existing certificate for cloudmigration.blog
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Congratulations, all simulated renewals succeeded:
+  /etc/letsencrypt/live/cloudmigration.blog/fullchain.pem (success)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[OK]    Auto-renew set.
+
+[OK]    All done. If you need to rollback TLS config, restore: /etc/apache2/sites-available/cloudmigration.blog.conf.2025-11-04_033545.bak
+LE cert files are under: /etc/letsencrypt/live/cloudmigration.blog/
+attila@AT-P-BLG-LMP-U24-01:~$
